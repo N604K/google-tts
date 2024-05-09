@@ -1,12 +1,13 @@
+import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from tkinter import ttk
-import os
 from google.cloud import texttospeech
 from google.auth.exceptions import DefaultCredentialsError
 
 class TextToSpeechApp:
     def __init__(self, root):
+        """Initializes the application, sets up the main window and default values for various options, and calls the `create_widgets()` method to create the GUI components."""
         self.root = root
         self.root.title("Text-to-Speech App")
 
@@ -22,6 +23,7 @@ class TextToSpeechApp:
         self.create_widgets()
 
     def create_widgets(self):
+        """Sets up the GUI components including labels, entries, buttons, and comboboxes for user interaction. It also configures the grid layout and handles widget resizing."""
         tk.Label(self.root, text="Text:").grid(row=0, column=0, sticky="e")
         tk.Entry(self.root, textvariable=self.text).grid(row=0, column=1, columnspan=3, sticky="we")
 
@@ -51,6 +53,7 @@ class TextToSpeechApp:
             self.root.grid_columnconfigure(i, weight=1)
 
     def select_json_file(self):
+        """Opens a file dialog for the user to select a Google Cloud credentials JSON file. Sets the selected file as the environment variable required for Google Cloud API authentication and updates the voice options based on the selected credentials."""
         file = filedialog.askopenfilename(title="Select Google Credentials JSON File", filetypes=[("JSON files", "*.json")])
         if file:
             self.json_file = file
@@ -71,6 +74,7 @@ class TextToSpeechApp:
         return voice_options
 
     def generate_speech(self):
+        """Generates speech from the input text using the selected voice and audio settings. Saves the output to a file with the appropriate audio encoding extension."""
         if not self.json_file:
             messagebox.showwarning("No JSON File", "Please select a JSON credentials file.")
             return

@@ -3,3 +3,5 @@ myenv/
 app.spec
 unnamed.webp
 version_info.txt
+build/
+dist/
